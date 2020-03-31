@@ -1,2 +1,4 @@
 haply-chai/
+build-*/
+*.pro.user
 

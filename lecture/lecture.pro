@@ -8,7 +8,6 @@ SOURCES += main.cpp
 # Specify your Chai3D / haply-chai folder
 CHAI3D = ../haply-chai
 
-
 # Turn off some warnings
 QMAKE_CXXFLAGS += /wd4100 # Ignore warning C4100 unreferenced formal parameter
 QMAKE_CXXFLAGS_WARN_ON -= -w34100 # Specifically:
@@ -20,6 +19,8 @@ win32{
     DEFINES += WIN64
     DEFINES += D_CRT_SECURE_NO_DEPRECATE
     QMAKE_CXXFLAGS += /EHsc /MP
+    QMAKE_CXXFLAGS_RELEASE += /MT
+    QMAKE_CXXFLAGS_DEBUG += /MTd
 
     INCLUDEPATH += $${CHAI3D}/src
     INCLUDEPATH += $${CHAI3D}/external/Eigen
@@ -27,23 +28,23 @@ win32{
     INCLUDEPATH += $${CHAI3D}/extras/GLFW/include
 
     DEPENDPATH += $${CHAI3D}/src
-    CONFIG(release, debug|release): LIBS += -L$${CHAI3D}/lib/Release/x64/ -lchai3d -lglu32 -lopengl32 -lwinmm
-    CONFIG(debug, debug|release): LIBS += -L$${CHAI3D}/lib/Debug/x64/ -lchai3d -lglu32 -lopengl32 -lwinmm
-    CONFIG(debug, debug|release): LIBS +=  -L$${CHAI3D}/extras/GLFW/lib/Debug/x64/ -lglfw
-    CONFIG(release, debug|release): LIBS +=  -L$${CHAI3D}/extras/GLFW/lib/Release/x64/ -lglfw
-    LIBS += -lglu32 -lOpenGl32 -lglu32 -lOpenGl32 -lwinmm -luser32
-    LIBS += kernel32.lib
-    LIBS += user32.lib
-    LIBS += gdi32.lib
-    LIBS += winspool.lib
-    LIBS += comdlg32.lib
-    LIBS += advapi32.lib
-    LIBS += shell32.lib
-    LIBS += ole32.lib
-    LIBS += oleaut32.lib
-    LIBS += uuid.lib
-    LIBS += odbc32.lib
-    LIBS += odbccp32.lib
+    CONFIG(release, debug|release) {
+        LIBS += -L$${CHAI3D}/Release/
+        LIBS += -L$${CHAI3D}/extras/GLFW/Debug/
+        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Release/
+        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Release/
+    }
+    CONFIG(debug, debug|release) {
+        LIBS += -L$${CHAI3D}/Debug/
+        LIBS +=  -L$${CHAI3D}/extras/GLFW/Release/
+        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Debug/
+        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Debug/
+    }
+
+    LIBS += -lchai3d -lOpenGl32 -lglu32 -lhaply-api-cpp -lwinmm -lglfw -lserial
+    LIBS += -lsetupapi -lkernel32 -luser32
+    LIBS += -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32
+    LIBS += -luuid -lcomdlg32 -ladvapi32
 }
 
 # Configured for the KTH CSC Karmosin computer halls
