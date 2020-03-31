@@ -9,14 +9,13 @@ HEADERS += 1_HelloWorld.h 4_HapticWall.h Assignment.h 2_ReadDevicePosition.h 5_M
 # Specify your Chai3D / haply-chai folder
 CHAI3D = ../haply-chai
 
-# Turn off some warnings
-QMAKE_CXXFLAGS += /wd4100 # Ignore warning C4100 unreferenced formal parameter
-QMAKE_CXXFLAGS_WARN_ON -= -w34100 # Specifically:
-#https://stackoverflow.com/questions/20402722/why-disable-specific-warning-not-working-in-visual-studio
-
-
 # Chai3D Linking below
 win32{
+    # Turn off some warnings
+    QMAKE_CXXFLAGS += /wd4100 # Ignore warning C4100 unreferenced formal parameter
+    QMAKE_CXXFLAGS_WARN_ON -= -w34100 # Specifically:
+    #https://stackoverflow.com/questions/20402722/why-disable-specific-warning-not-working-in-visual-studio
+
     DEFINES += WIN64
     DEFINES += D_CRT_SECURE_NO_DEPRECATE
     QMAKE_CXXFLAGS += /EHsc /MP
