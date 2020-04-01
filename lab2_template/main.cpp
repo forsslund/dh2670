@@ -110,6 +110,9 @@ int swapInterval = 1;
 // root resource path
 string resourceRoot;
 
+// virtual button
+bool space_button{false};
+
 
 //------------------------------------------------------------------------------
 // DECLARED MACROS
@@ -577,6 +580,10 @@ void keyCallback(GLFWwindow* a_window, int a_key, int a_scancode, int a_action, 
         return;
     }
 
+    else if(a_key == GLFW_KEY_SPACE){
+        space_button = !space_button;
+    }
+
     // option - exit
     else if ((a_key == GLFW_KEY_ESCAPE) || (a_key == GLFW_KEY_Q))
     {
@@ -790,8 +797,8 @@ void updateHaptics(void)
         // compute transformation from world to tool (haptic device)
         cTransform world_T_tool = tool->getDeviceGlobalTransform();
 
-        // get status of user switch
-        bool button = tool->getUserSwitch(0);
+        // get status of user switch, or toggled on/off with space bar
+        bool button = space_button || tool->getUserSwitch(0);
 
         //
         // STATE 1:

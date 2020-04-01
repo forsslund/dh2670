@@ -21,9 +21,6 @@
 	\date      January 2010
 	*/
 //===========================================================================
-// This define is (maybe) needed for some gcc5 reason
-// http://stackoverflow.com/questions/33394934/converting-std-cxx11string-to-stdstring
-#define _GLIBCXX_USE_CXX11_ABI 0
 
 //---------------------------------------------------------------------------
 //#include <stdio.h>
