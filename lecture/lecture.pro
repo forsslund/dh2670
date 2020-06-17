@@ -1,12 +1,14 @@
 TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
-CONFIG -= qt
+#CONFIG -= qt
+QT += network
 
 SOURCES += main.cpp
 
 # Specify your Chai3D / haply-chai folder
-CHAI3D = ../haply-chai
+#CHAI3D = ../haply-chai
+CHAI3D = ../../chai3d
 
 # Chai3D Linking below
 win32{
@@ -18,9 +20,9 @@ win32{
 
     DEFINES += WIN64
     DEFINES += D_CRT_SECURE_NO_DEPRECATE
-    QMAKE_CXXFLAGS += /EHsc /MP
-    QMAKE_CXXFLAGS_RELEASE += /MT
-    QMAKE_CXXFLAGS_DEBUG += /MTd
+    #QMAKE_CXXFLAGS += /EHsc /MP
+    #QMAKE_CXXFLAGS_RELEASE += /MT
+    #QMAKE_CXXFLAGS_DEBUG += /MTd
 
     INCLUDEPATH += $${CHAI3D}/src
     INCLUDEPATH += $${CHAI3D}/external/Eigen
@@ -30,18 +32,22 @@ win32{
     DEPENDPATH += $${CHAI3D}/src
     CONFIG(release, debug|release) {
         LIBS += -L$${CHAI3D}/Release/
-        LIBS += -L$${CHAI3D}/extras/GLFW/Debug/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Release/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Release/
+        LIBS += -L$${CHAI3D}/extras/GLFW/Release/
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Release/
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Release/
+       LIBS += -L$${CHAI3D}/external/remotehaptics/release/ -lremotehaptics
+
     }
     CONFIG(debug, debug|release) {
         LIBS += -L$${CHAI3D}/Debug/
-        LIBS +=  -L$${CHAI3D}/extras/GLFW/Release/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Debug/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Debug/
+        LIBS +=  -L$${CHAI3D}/extras/GLFW/Debug/
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Debug/
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Debug/
+        LIBS += -L$${CHAI3D}/external/remotehaptics/debug/ -lremotehaptics
     }
 
-    LIBS += -lchai3d -lOpenGl32 -lglu32 -lhaply-api-cpp -lwinmm -lglfw -lserial
+#    LIBS += -lchai3d -lOpenGl32 -lglu32 -lhaply-api-cpp -lwinmm -lglfw -lserial
+    LIBS += -lchai3d -lOpenGl32 -lglu32 -lwinmm -lglfw
     LIBS += -lsetupapi -lkernel32 -luser32
     LIBS += -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32
     LIBS += -luuid -lcomdlg32 -ladvapi32
@@ -85,8 +91,8 @@ mac: {
     DEFINES += MACOSX
     QMAKE_CXXFLAGS += -std=c++0x
     LIBS += -L$${CHAI3D}/external/DHD/lib/mac-x86_64
-    LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp -lhaply-api-cpp
-    LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial -lserial
+ #   LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp -lhaply-api-cpp
+ #   LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial -lserial
     LIBS += -L$${CHAI3D}/extras/GLFW
     LIBS += -L$${CHAI3D}/
     LIBS += -lchai3d

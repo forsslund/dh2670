@@ -12,10 +12,10 @@
  *
  */
 
-#define START
+//#define START
 //#define HELLO_WORLD_0
 //#define HELLO_WORLD_1
-//#define HELLO_WORLD_2
+#define HELLO_WORLD_2
 //#define EXAMPLE_1
 //#define EXAMPLE_21_LOADING_TEAPOT_OBJ
 
