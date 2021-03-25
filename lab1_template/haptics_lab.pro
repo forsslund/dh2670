@@ -48,7 +48,7 @@ win32{
 }
 
 # Configured for the KTH CSC Karmosin computer halls
-unix!mac {
+unix {
     CHAI3D = /opt/chai3d/3.2.0
 
     INCLUDEPATH += $${CHAI3D}/src
