@@ -154,9 +154,6 @@ int height = 0;
 // swap interval for the display context (vertical synchronization)
 int swapInterval = 1;
 
-// a small sphere (cursor) representing the haptic device
-cShapeSphere* cursor;
-
 // a font for rendering text
 cFontPtr font;
 
@@ -345,16 +342,6 @@ int main(int argc, char* argv[])
 
     // retrieve information about the current haptic device
     cHapticDeviceInfo info = hapticDevice->getSpecifications();
-
-    // display a reference frame if haptic device supports orientations
-    if (info.m_sensedRotation == true)
-    {
-        // display reference frame
-        cursor->setShowFrame(true);
-
-        // set the size of the reference frame
-        cursor->setFrameSize(0.05);
-    }
 
     // if the device has a gripper, enable the gripper to simulate a user switch
     hapticDevice->setEnableGripperUserSwitch(true);

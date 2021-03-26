@@ -54,7 +54,7 @@ win32{
 }
 
 # Configured for the KTH CSC Karmosin computer halls
-unix!mac {
+unix {
     CHAI3D = /opt/chai3d/3.2.0
 
     INCLUDEPATH += $${CHAI3D}/src
@@ -82,6 +82,8 @@ unix!mac {
     LIBS += -lXinerama
 }
 
+# Note if you are using mac maybe it detects it as "unix" above.
+# If so remove the unix section above completely.
 mac: {
     INCLUDEPATH += $${CHAI3D}/src
     INCLUDEPATH += $${CHAI3D}/external/Eigen
@@ -91,8 +93,9 @@ mac: {
     DEFINES += MACOSX
     QMAKE_CXXFLAGS += -std=c++0x
     LIBS += -L$${CHAI3D}/external/DHD/lib/mac-x86_64
- #   LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp -lhaply-api-cpp
- #   LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial -lserial
+#   Uncomment if you use haply
+#   LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp -lhaply-api-cpp
+#   LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial -lserial
     LIBS += -L$${CHAI3D}/extras/GLFW
     LIBS += -L$${CHAI3D}/
     LIBS += -lchai3d

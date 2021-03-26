@@ -7,7 +7,7 @@ SOURCES += Main.cpp
 HEADERS += 1_HelloWorld.h 4_HapticWall.h Assignment.h 2_ReadDevicePosition.h 5_MagneticEffect.h 3_BasicForceEffects.h 6_HapticSphere.h
 
 # Specify your Chai3D / haply-chai folder
-CHAI3D = ../haply-chai
+CHAI3D = ../../chai3d
 
 # Chai3D Linking below
 win32{
@@ -19,8 +19,17 @@ win32{
     DEFINES += WIN64
     DEFINES += D_CRT_SECURE_NO_DEPRECATE
     QMAKE_CXXFLAGS += /EHsc /MP
-    QMAKE_CXXFLAGS_RELEASE += /MT
-    QMAKE_CXXFLAGS_DEBUG += /MTd
+
+    # If you get build errors along the line with this:
+    #chai3d.lib(CGlobals.obj):-1: error: LNK2038: mismatch detected for 'RuntimeLibrary':
+    #value 'MDd_DynamicDebug' doesn't match value 'MTd_StaticDebug' in main.obj
+    # Then try uncomment either block below /MT & /MTd or /MD & /MDd:
+
+    #QMAKE_CXXFLAGS_RELEASE += /MT
+    #QMAKE_CXXFLAGS_DEBUG += /MTd
+
+    #QMAKE_CXXFLAGS_RELEASE += /MD
+    #QMAKE_CXXFLAGS_DEBUG += /MDd
 
     INCLUDEPATH += $${CHAI3D}/src
     INCLUDEPATH += $${CHAI3D}/external/Eigen
@@ -31,17 +40,21 @@ win32{
     CONFIG(release, debug|release) {
         LIBS += -L$${CHAI3D}/Release/
         LIBS += -L$${CHAI3D}/extras/GLFW/Debug/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Release/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Release/
+# Uncomment for haply-chai support
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Release/
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Release/
     }
     CONFIG(debug, debug|release) {
         LIBS += -L$${CHAI3D}/Debug/
         LIBS +=  -L$${CHAI3D}/extras/GLFW/Release/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Debug/
-        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Debug/
+# Uncomment for haply-chai support
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/Debug/
+#        LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial/Debug/
     }
 
-    LIBS += -lchai3d -lOpenGl32 -lglu32 -lhaply-api-cpp -lwinmm -lglfw -lserial
+    LIBS += -lchai3d -lOpenGl32 -lglu32 -lwinmm -lglfw
+# Uncomment for haply-chai support
+#    LIBS += -lchai3d -lOpenGl32 -lglu32 -lhaply-api-cpp -lwinmm -lglfw -lserial
     LIBS += -lsetupapi -lkernel32 -luser32
     LIBS += -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32
     LIBS += -luuid -lcomdlg32 -ladvapi32
@@ -76,6 +89,8 @@ unix {
     LIBS += -lXinerama
 }
 
+# Note if you are using mac maybe it detects it as "unix" above.
+# If so remove the unix section above completely.
 mac: {
     INCLUDEPATH += $${CHAI3D}/src
     INCLUDEPATH += $${CHAI3D}/external/Eigen
@@ -85,8 +100,9 @@ mac: {
     DEFINES += MACOSX
     QMAKE_CXXFLAGS += -std=c++0x
     LIBS += -L$${CHAI3D}/external/DHD/lib/mac-x86_64
-    LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp -lhaply-api-cpp
-    LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial -lserial
+# Uncomment if you use haply
+#    LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp -lhaply-api-cpp
+#    LIBS += -L$${CHAI3D}/external/github-HaplyHaptics-Haply-API-cpp/external/github-HaplyHaptics-serial -lserial
     LIBS += -L$${CHAI3D}/extras/GLFW
     LIBS += -L$${CHAI3D}/
     LIBS += -lchai3d
